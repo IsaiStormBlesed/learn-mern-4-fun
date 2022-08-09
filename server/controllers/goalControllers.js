@@ -5,7 +5,9 @@ const Goal = require("../models/goalModel.js");
 // @route GET /api/goals
 // @access Private
 const getGoals = asyncHandler(async (req, res) => {
-  res.status(200).json({ some: "GET goals" });
+  const goals = await Goal.find({});
+
+  res.status(200).json(goals);
 });
 
 // @desc  New goal
@@ -17,21 +19,45 @@ const postGoal = asyncHandler(async (req, res) => {
     throw new Error("Please add a text field");
   }
 
-  res.status(200).json({ some: "POST goals" });
+  const newGoal = await Goal.create({
+    text: req.body.text,
+  });
+
+  res.status(200).json(newGoal);
 });
 
 // @desc  Update a goal
 // @route PUT /api/goals/:id
 // @access Private
 const editGoal = asyncHandler(async (req, res) => {
-  res.json({ some: `PUT goal number ${req.params.id}` });
+  const goalID = await Goal.findById(req.params.id);
+
+  if (!goalID) {
+    res.status(400);
+    throw new Error("Goal not found");
+  }
+
+  const goalUpdated = await Goal.findByIdAndUpdate(goalID, req.body, {
+    new: true,
+  });
+
+  res.json(goalUpdated);
 });
 
 // @desc  Delete a goal
 // @route DELETE /api/goals/:id
 // @access Private
 const deleteGoal = asyncHandler(async (req, res) => {
-  res.json({ some: `DELETE goal number ${req.params.id}` });
+  const goalID = await Goal.findById(req.params.id);
+
+  if (!goalID) {
+    res.status(400);
+    throw new Error("Goal not found");
+  }
+
+  await goalID.remove();
+
+  res.json({ id: req.params.id });
 });
 
 module.exports = {
