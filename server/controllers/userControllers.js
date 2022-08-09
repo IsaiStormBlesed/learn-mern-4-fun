@@ -38,6 +38,7 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: newUser.id,
       name: newUser.name,
       email: newUser.email,
+      token: generateJWT(newUser.id),
     });
   } else {
     res.status(400);
@@ -58,6 +59,7 @@ const authenticateUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
+      token: generateJWT(user.id),
     });
   } else {
     res.status(400);
@@ -71,6 +73,13 @@ const authenticateUser = asyncHandler(async (req, res) => {
 const getMe = asyncHandler(async (req, res) => {
   res.json({ msg: "My data" });
 });
+
+//Generate JWT Token
+const generateJWT = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
+};
 
 module.exports = {
   registerUser,
