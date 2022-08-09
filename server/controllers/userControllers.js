@@ -1,10 +1,48 @@
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
+const User = require("../models/userModel.js");
 
 // @desc Register User
 // @route POST /api/users
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  res.json({ msg: "User registered" });
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error("All fields required");
+  }
+
+  //Check if user exists
+  const userExists = await User.findOne({ email });
+
+  if (userExists) {
+    res.status(400);
+    throw new Error("User already exists");
+  }
+
+  //Hash password
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  //Create user
+  const newUser = await User.create({
+    name,
+    email,
+    password: hashedPassword,
+  });
+
+  if (newUser) {
+    res.status(201).json({
+      _id: newUser.id,
+      name: newUser.name,
+      email: newUser.email,
+    });
+  } else {
+    res.status(400);
+    throw new Error("User cannot be created");
+  }
 });
 
 // @desc Authenticate user
