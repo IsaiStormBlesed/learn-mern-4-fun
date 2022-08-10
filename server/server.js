@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const colors = require("colors");
 const dotenv = require("dotenv").config();
 const goalsRoutes = require("./routes/goalRoutes.js");
@@ -15,6 +16,12 @@ const app = express();
 //Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(
+  cors({
+    credentials: true,
+    origin: true,
+  })
+);
 
 app.use("/api/goals", goalsRoutes);
 app.use("/api/users", userRoutes);
