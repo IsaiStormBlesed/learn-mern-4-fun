@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { FaUser } from "react-icons/fa";
 import { register, reset } from "../features/auth/authSlice";
-import { useEffect } from "react";
 import Spinner from "../components/Spinner";
 
 function Register() {
