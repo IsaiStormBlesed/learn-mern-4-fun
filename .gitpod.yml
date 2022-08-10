@@ -1,7 +1,9 @@
 tasks:
   - init: npm install
-    command: npm run dev
+    command: npm run server
 
 ports:
   - port: 5000
     visibility: public
+  - port: 3000
+    onOpen: open-browser
