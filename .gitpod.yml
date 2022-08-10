@@ -1,6 +1,9 @@
 tasks:
-  - init: npm install
-    command: npm run server
+  - init: |
+      npm install
+      cd frontend
+      npm install
+    command: npm run dev
 
 ports:
   - port: 5000
