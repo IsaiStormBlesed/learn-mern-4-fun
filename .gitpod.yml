@@ -9,4 +9,5 @@ ports:
   - port: 5000
     visibility: public
   - port: 3000
+    visibility: public
     onOpen: open-browser
