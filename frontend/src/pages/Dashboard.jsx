@@ -1,7 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import { fetchGoals, reset } from "../features/goals/goalSlice";
+import { fetchGoals } from "../features/goals/goalSlice";
+import { reset } from "../features/auth/authSlice";
 import GoalForm from "../components/GoalForm";
 import Spinner from "../components/Spinner";
 import GoalItem from "../components/GoalItem";
