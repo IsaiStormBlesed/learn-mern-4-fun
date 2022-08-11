@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API_URL =
-  "https://5000-isaistormbl-learnmern4f-njb1r0t4jp8.ws-us60.gitpod.io/api/goals/";
+const API_URL = "/api/goals/";
 
 //Create goal
 const createGoal = async (goalData, token) => {
