@@ -8,7 +8,6 @@ const createGoal = async (goalData, token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    withCredentials: true,
   };
   const response = await axios.post(API_URL, goalData, config);
   return response.data;
@@ -20,7 +19,6 @@ const fetchGoals = async (token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    withCredentials: true,
   };
   const response = await axios.get(API_URL, config);
   return response.data;
@@ -32,7 +30,6 @@ const deleteGoal = async (goalID, token) => {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-    withCredentials: true,
   };
   const response = await axios.delete(API_URL + goalID, config);
   return response.data;
